@@ -1,0 +1,70 @@
+
+\documentclass[11pt,letterpaper]{article}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=0.75in}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE {{ name|escape_latex }}} \\[4pt]
+  \vspace{4pt}
+  home: \href{mailto:{{ contact.email.personal|escape_latex }}}{{ '{' }}{{ contact.email.personal|escape_latex }}{{ '}' }} \\
+  work: \href{mailto:{{ contact.email.work|escape_latex }}}{{ '{' }}{{ contact.email.work|escape_latex }}{{ '}' }} \\
+  web: \href{https://{{ contact.web }}}{{ '{' }}{{ contact.web }}{{ '}' }} \\
+  phone: {{ contact.phone|escape_latex }} \\
+  address: {{ contact.address|escape_latex }}, {{ contact.city }}, {{ contact.state }} {{ contact.zip }} \\
+\end{center}
+
+\vspace{8pt}
+
+\section*{Objective}
+{{ objective|escape_latex }}
+
+\vspace{8pt}
+\section*{Profile}
+{{ profile|escape_latex }}
+
+\vspace{6pt}
+\section*{Professional Experience}
+{% for job in experience %}
+  	{\bf {{ job.title|escape_latex }} } - \href{{ '{' }}{{ job.url }}{{ '}' }}{{ '{' }}{{ job.company|escape_latex }}{{ '}' }}\hfill {{ job.dates|escape_latex }} \\
+  	 {{ job.location|escape_latex }}  \\
+  \begin{itemize}
+  {% for h in job.highlights %}
+    \item {{ h|escape_latex }}
+  {% endfor %}
+  \end{itemize}
+{% endfor %}
+
+\section*{Education}
+	{\bf {{ education.degree|escape_latex }}, } {{ education.institution|escape_latex }} \\
+{{ education.location|escape_latex }} \hspace{0.2in} GPA {{ education.gpa|escape_latex }} \hfill {{ education.graduation|escape_latex }}
+
+\section*{Certifications}
+{% for c in certifications %}
+  {{ c|escape_latex }} \\
+{% endfor %}
+
+\raggedright
+\section*{Training}
+\begin{raggedright}
+{% for t in training %}
+\emph{ {{ t.title|escape_latex }}, } {{ t.provider|escape_latex }}, {{ t.date|escape_latex }} \\
+{% endfor %}
+\end{raggedright}
+
+
+\section*{Veteran Status}
+\href{{ '{' }}{{ veteran_status.url }}{{ '}' }}{ {{ veteran_status.branch }}{{'}'}}, {{ veteran_status.status }}
+
+\vspace{0.2in}
+\section*{Skills}
+\begin{tabular}{l p{3in}}
+\underline{Languages:} & {{ skills.languages | join(', ') | escape_latex }} \\
+\underline{Cloud Infra:} & {{ skills.cloud_infra | join(', ') | escape_latex }} \\
+\underline{Software:} & {{ skills.software | join(', ') | escape_latex }} \\
+\underline{Disciplines:} & {{ skills.disciplines | join(', ') | escape_latex }} \\
+\end{tabular}
+
+\end{document}

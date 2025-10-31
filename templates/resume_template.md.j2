@@ -1,0 +1,48 @@
+{{ '#' }} {{ name }}
+
+{{ profile }}
+---
+
+{{ '##' }} Experience
+
+{% for job in experience %}
+{{ '###' }} {{ job.title }} — {{ job.company | md_trailing_punc }}
+
+#### {{ job.start }} → {{ job.end or "Present" }}
+
+{{ job.highlights }}
+
+{% endfor %}
+---
+
+## Education
+
+**{{ education.degree }}**, {{ education.institution }} ({{ education.graduation }})
+
+---
+
+## Certifications
+
+{% for c in certifications %}
+- {{ c }}
+{% endfor %}
+
+---
+
+## Training
+
+{% for t in training %}
+### {{ t.title }}
+
+- Provider: {{ t.provider }}
+- Date: {{ t.date }}
+
+{% endfor %}
+---
+
+## Veteran Status
+
+- Branch: {{ veteran_status.branch }}
+- Status: {{ veteran_status.status }}
+- URL: [{{ veteran_status.url }}]({{ veteran_status.url }})
+

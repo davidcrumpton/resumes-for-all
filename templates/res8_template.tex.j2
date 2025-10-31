@@ -1,0 +1,87 @@
+\documentclass{res}
+\usepackage{newcent}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{24pt}
+\setlength{\headsep}{24pt}
+\pagestyle{fancy}
+\rhead{ {\it D. Crumpton}\\{\it p. \thepage} }
+\cfoot{}
+\topmargin=-0.5in
+
+\begin{document}
+\thispagestyle{empty}
+
+\name{ {{ name }}\\[12pt] }
+
+\address{{ '{{' }}\bf Electronic Addresses} \\home: \href{{ '{' }}mailto:{{ contact.email.personal }}{{ '}' }}{{ '{' }}{{ contact.email.personal }}{{ '}' }} \\  work: \href{mailto://{{ contact.email.work }}}{{ '{' }}{{ contact.email.work }}{{ '}' }}\\web:   \href{{ '{' }}https://{{contact.web }}{{ '}' }}{{ '{' }}{{ contact.web }}{{ '}' }}}
+\address{{ '{{' }}\bf Physical Address} \\ {{ contact.address }}, \\ {{ contact.city }}, {{ contact.state }} {{ contact.zip }}\\
+        {{ contact.phone }} }
+        
+\begin{resume}
+
+\section{\centerline{PROFILE}}
+\vspace{8pt}
+{{ profile }}
+
+\vspace{0.2in}
+\section{\centerline{OBJECTIVE}}
+\vspace{8pt}
+{{ objective }}
+
+\vspace{0.2in}
+\section{\centerline{PROFESSIONAL EXPERIENCE}}
+\vspace{8pt}
+
+{% for job in experience %}
+{\sl \href{{'{'}}{{ job.url }}{{'}'}}{{'{'}}{{ job.company }}}}, {{ job.location }} \hfill {{ job.dates }} \\
+{{ job.title }}, {{ job.location }}
+\begin{itemize} \itemsep -2pt
+{% for h in job.highlights %}
+\item {{ h }}
+{% endfor %}
+\end{itemize}
+{% endfor %}
+
+\vspace{0.2in}
+\section{\centerline{COMPUTING SKILLS}}
+\vspace{8pt}
+\begin{tabular}{l p{3in}}
+\underline{Languages:} & {{ skills.languages | join(', ') }} \\
+\underline{Cloud Infra:} & {{ skills.cloud_infra | join(', ') }} \\
+\underline{Software:} & {{ skills.software | join(', ') }} \\
+\underline{Disciplines:} & {{ skills.disciplines | join(', ') }} \\
+\end{tabular}
+
+\vspace{0.2in}
+\section{\centerline{EDUCATION}}
+\vspace{8pt}
+{\sl {{ education.degree }}}, {{ education.institution }} \\
+{{ education.location }} \hspace{0.2in} GPA {{ education.gpa }} \hfill {{ education.graduation }}
+
+\vspace{0.2in}
+\section{\centerline{CERTIFICATIONS}}
+\vspace{8pt}
+{% for c in certifications %}
+{{ c }}\\
+{% endfor %}
+
+\vspace{0.2in}
+\section{\centerline{TRAINING}}
+\vspace{8pt}
+\begin{raggedright}
+{% for t in training %}
+\emph{ {{ t.title }}, } {{ t.provider }}, {{ t.date }}\\
+{% endfor %}
+\end{raggedright}
+
+\vspace{0.2in}
+\section{\centerline{VETERAN STATUS}}
+\vspace{8pt}
+\href{{ '{' }}{{ veteran_status.url }}{{ '}' }}{ {{ veteran_status.branch }}{{'}'}}, {{ veteran_status.status }}
+
+\vspace{0.2in}
+\end{resume}
+\end{document}

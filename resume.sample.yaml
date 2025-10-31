@@ -1,0 +1,56 @@
+name: "Your Name"
+
+contact:
+  email:
+    personal: "your.email@example.com"
+    work: "your.work@example.com"
+  phone: "(000) 000-0000"
+  address: "123 Example St"
+  city: "City"
+  state: "ST"
+  zip: "00000"
+  linkedin: "https://www.linkedin.com/in/yourprofile"
+  web: "yourwebsite.example.com"
+
+objective: >
+  A short statement of your objective or the role you are seeking.
+
+profile: >
+  A brief professional summary highlighting experience, skills, and goals.
+
+experience:
+  - company: "Example Company"
+    url: "https://www.example.com/"
+    location: "City, ST"
+    title: "Job Title"
+    start: "Month Year"
+    dates: "Month Year - Month Year"
+    highlights:
+      - "Key achievement or responsibility."
+      - "Another highlight."
+
+skills:
+  languages: ["Python", "BASH"]
+  cloud_infra: ["Automation", "Monitoring"]
+  software: ["Terraform", "Ansible"]
+  disciplines: ["Documentation"]
+
+education:
+  degree: "Degree Name"
+  institution: "University Name"
+  location: "City, ST"
+  gpa: "4.0"
+  graduation: "Year"
+
+certifications:
+  - "Certification Name (Year)"
+
+training:
+  - title: "Training Title"
+    provider: "Provider"
+    date: "Year"
+
+veteran_status:
+  branch: ""
+  status: ""
+  url: ""

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{ name }} – Resume</title>
+<style>
+body { font-family: Helvetica, Arial, sans-serif; margin: 40px; color: #333; }
+h1 { border-bottom: 2px solid #555; padding-bottom: 5px; }
+h2 { color: #444; margin-top: 1.5em; }
+.job, .edu { margin-bottom: 1em; }
+ul { list-style: none; padding: 0; }
+</style>
+</head>
+<body>
+<h1>{{ name }}</h1>
+<p><strong>{{ title }}</strong></p>
+<p>{{ Profile }}</p>
+
+<h2>Experience</h2>
+{% for job in experience %}
+<div class="job">
+  <strong>{{ job.title }}</strong> — {{ job.company }}<br>
+  <em>{{ job.dates }}</em>
+  <p>{{ job.highlights }}</p>
+</div>
+{% endfor %}
+
+<h2>Education</h2>
+
+<div class="edu">
+  <strong>{{ education.degree }}</strong>, {{ education.institution }} ({{ education.gpa }})
+</div>
+
+<h2>Skills</h2>
+<ul>
+  <li><strong>Languages:</strong> {{ skills.languages | join(", ") }}</li>
+  <li><strong>Cloud/Infra:</strong> {{ skills.cloud_infra | join(", ") }}</li>
+  <li><strong>Software:</strong> {{ skills.software | join(", ") }}</li>
+  <li><strong>Disciplines:</strong> {{ skills.disciplines | join(", ") }}</li>
+</ul> 
+<h2>Certifications</h2>
+<ul>
+{% for c in certifications %}
+  <li>{{ c }}</li>
+{% endfor %}
+</ul>   
+<h2>Training</h2>
+<ul>
+{% for t in training %}
+  <li><strong>{{ t.title }}</strong> — {{ t.provider }} ({{ t.date }})</li>
+{% endfor %}
+</ul>
+<h2>Veteran Status</h2>
+<p>{{ veteran_status.branch }} — {{ veteran_status.status }}<br>
+<a href="{{ veteran_status.url }}">{{ veteran_status.url }}</a></p>
+</body>
+</html>

@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+set -eo pipefail
+cp res.cls out/
+./generate.py
+for f in out/*.tex; do [ -f "$f" ] && pdflatex -output-directory out "$f" || true; done

@@ -1,0 +1,32 @@
+workflow:
+  rules:
+    # Run pipelines when templates, generator, data, or CI config change
+    - changes:
+      - templates/**/*
+      - generate.py
+      - resume.yaml
+      - .gitlab-ci.yml
+      when: always
+    # Don't run for other changes (e.g., README, LICENSE)
+    - when: never
+
+stages:
+  - build
+
+build_resume:
+  image: python:3.12
+  stage: build
+  script:
+    - pip install pyyaml jinja2
+    - python generate.py
+    - apt-get update && apt-get install -y texlive-latex-base texlive-latex-extra texlive-fonts-recommended
+    # Run pdflatex only on generated .tex files under out/
+    - for f in out/*.tex; do [ -f "$f" ] && pdflatex -output-directory out "$f" || true; done
+  artifacts:
+    paths:
+      - "out/*.pdf"
+      - "out/*.html"
+      - "out/*.md"
+      - "out/*.tex"
+  tags:
+    - docker
