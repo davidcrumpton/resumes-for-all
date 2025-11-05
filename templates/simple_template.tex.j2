@@ -1,0 +1,87 @@
+\documentclass[11pt]{article}
+\author{ {{name }} }
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\title{ Profesional Resume }
+\date{\today}
+
+\begin{document}
+\title{Professional Resume}
+\maketitle
+
+\section*{Contact}
+\begin{itemize}[label=$\bullet$]
+{% if options.contact.personal %}
+    \item {{ '\\href{' }}{{ contact.email.personal }}{{ '}' }}{{ '{'}}{{ contact.email.personal }}{{'}'}}
+{% endif %}
+{% if options.contact.work %}
+    \item {{ '\\href{' }}{{ contact.email.work }}{{ '}' }}{{ '{'}}{{ contact.email.work }}{{'}'}}
+    \item {{ contact.phone.work }}
+    \item {{ contact.address.work }} \\
+        {{ contact.city.work }}, {{ contact.state.work }} {{ contact.zip.work }}
+{% endif %}
+{% if options.contact.personal %}
+    \item \href{ {{contact.git}}}{GitHub} - {{ '{' }}{{ contact.git }}{{ '}' }}
+{% endif %}
+\end{itemize}
+
+\section*{Objective}
+{{ objective | escape_latex }}
+
+
+\section*{Profile}
+{{ profile |escape_latex }}
+\section*{Experience}
+{% for job in experience %}
+{{ '\\textbf{' }}{{ job.company }}} \hfill {{ job.start }} - {{ job.end or 'Present' }} \\
+{{ '\\href{' }}{{job.url}}}{{ '{'}}{{job.url}}} \hfill {{ job.location }} \\
+{{ '\\textbf{' }}{{ job.title}}}
+\begin{itemize}[label=$\bullet$]
+    {% for duty in job.highlights %}
+    \item {{ duty | escape_latex }}
+    {% endfor %}
+\end{itemize}
+{{ '\\' }}
+{% endfor %}
+
+
+\section*{Skills}
+
+\underline{Languages:} {{ skills.languages | join(', ') }} \\
+\underline{Cloud Infra:} {{ skills.cloud_infra | join(', ') }} \\
+\underline{Software:} {{ skills.software | join(', ') }} \\
+\underline{Disciplines:} {{ skills.disciplines | join(', ') }} \\
+{% if education %}
+\section*{Education}
+
+{% for edu in education %}
+{{ '\\textbf{' }}{{ edu.institution }}} \hfill {{ edu.graduation_date }} \\
+{{ edu.degree }}, {{ edu.major }} \hfill {{ edu.location }} \hfill GPA: {{ edu.gpa }} \\
+{% endfor %}
+{% endif %}
+
+{% if certifications %}
+\section*{Certifications}
+{% for cert in certifications %}
+{{ cert }} \\
+{% endfor %}
+{% endif %}
+
+{% if training %}
+\section*{Training}
+
+{% for t in training %}
+{{ '\\textbf{' }}{{ t.title }}} \hfill {{ t.date }} \hfill Provider: {{ t.provider }} \\
+{% endfor %}
+{% endif %}
+
+{% if veteran_status %}
+\section*{Veteran Status}
+
+{{ '\\textbf{' }}{{ veteran_status.branch }}} \hfill Honorably Discharged\\
+{{'\href{'}}{{ veteran_status.url }}}{ {{ veteran_status.url }}}
+
+{% endif %}
+\end{document}

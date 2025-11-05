@@ -14,21 +14,25 @@
 
 {% endfor %}
 ---
-
+{% if education %}
 ## Education
 
-**{{ education.degree }}**, {{ education.institution }} ({{ education.graduation }})
+{% for e in education %}
+- **{{ e.degree }}**, {{ e.institution }} ({{ e.graduation }})
 
+{% endfor %}
 ---
-
+{% endif %}
+{% if training %}
 ## Certifications
 
 {% for c in certifications %}
 - {{ c }}
 {% endfor %}
-
 ---
+{% endif %}
 
+{% if training %}
 ## Training
 
 {% for t in training %}
@@ -39,10 +43,12 @@
 
 {% endfor %}
 ---
+{% endif %}
 
+{% if veteran_status %}
 ## Veteran Status
 
 - Branch: {{ veteran_status.branch }}
 - Status: {{ veteran_status.status }}
 - URL: [{{ veteran_status.url }}]({{ veteran_status.url }})
-
+{% endif %}

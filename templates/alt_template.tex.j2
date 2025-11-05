@@ -9,11 +9,19 @@
 \begin{center}
   {\LARGE {{ name|escape_latex }}} \\[4pt]
   \vspace{4pt}
+  {% if options.contact.personal %}
   home: \href{mailto:{{ contact.email.personal|escape_latex }}}{{ '{' }}{{ contact.email.personal|escape_latex }}{{ '}' }} \\
+  {% endif %}
+  {% if options.contact.work %}
   work: \href{mailto:{{ contact.email.work|escape_latex }}}{{ '{' }}{{ contact.email.work|escape_latex }}{{ '}' }} \\
-  web: \href{https://{{ contact.web }}}{{ '{' }}{{ contact.web }}{{ '}' }} \\
-  phone: {{ contact.phone|escape_latex }} \\
-  address: {{ contact.address|escape_latex }}, {{ contact.city }}, {{ contact.state }} {{ contact.zip }} \\
+  {% endif %}
+  web: \href{https://{{ contact.web.personal }}}{{ '{' }}{{ contact.web.personal }}{{ '}' }} \\
+  {% if options.contact.work %}
+  phone: {{ contact.phone.work|escape_latex }} \\
+  {% endif %}
+  {% if options.contact.work %}
+  address: {{ contact.address.work|escape_latex }}, {{ contact.city.work }}, {{ contact.state.work }} {{ contact.zip.work }} \\
+  {% endif %}
 \end{center}
 
 \vspace{8pt}
@@ -38,14 +46,21 @@
 {% endfor %}
 
 \section*{Education}
-	{\bf {{ education.degree|escape_latex }}, } {{ education.institution|escape_latex }} \\
-{{ education.location|escape_latex }} \hspace{0.2in} GPA {{ education.gpa|escape_latex }} \hfill {{ education.graduation|escape_latex }}
+{% for e in education %}
+	{\bf {{ e.degree|escape_latex }}, } {{ e.institution|escape_latex }} \\
+{{ e.location|escape_latex }} \hspace{0.2in} GPA {{ e.gpa|escape_latex }} \hfill {{ e.graduation|escape_latex }}
 
+
+{% endfor %}
+
+{% if certifications %}
 \section*{Certifications}
 {% for c in certifications %}
   {{ c|escape_latex }} \\
 {% endfor %}
+{% endif %}
 
+{% if training %}
 \raggedright
 \section*{Training}
 \begin{raggedright}
@@ -53,11 +68,13 @@
 \emph{ {{ t.title|escape_latex }}, } {{ t.provider|escape_latex }}, {{ t.date|escape_latex }} \\
 {% endfor %}
 \end{raggedright}
+{% endif %}
 
-
+{% if veteran_status %}
 \section*{Veteran Status}
 \href{{ '{' }}{{ veteran_status.url }}{{ '}' }}{ {{ veteran_status.branch }}{{'}'}}, {{ veteran_status.status }}
-
+{% endif %}
+{% if skills %}
 \vspace{0.2in}
 \section*{Skills}
 \begin{tabular}{l p{3in}}
@@ -66,5 +83,6 @@
 \underline{Software:} & {{ skills.software | join(', ') | escape_latex }} \\
 \underline{Disciplines:} & {{ skills.disciplines | join(', ') | escape_latex }} \\
 \end{tabular}
+{% endif %}
 
 \end{document}

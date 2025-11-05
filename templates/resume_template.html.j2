@@ -16,6 +16,7 @@ ul { list-style: none; padding: 0; }
 <p><strong>{{ title }}</strong></p>
 <p>{{ Profile }}</p>
 
+{% if experience %} 
 <h2>Experience</h2>
 {% for job in experience %}
 <div class="job">
@@ -24,13 +25,18 @@ ul { list-style: none; padding: 0; }
   <p>{{ job.highlights }}</p>
 </div>
 {% endfor %}
+{% endif %}
 
+{% if education %} 
 <h2>Education</h2>
-
+{% for e in education %}
 <div class="edu">
-  <strong>{{ education.degree }}</strong>, {{ education.institution }} ({{ education.gpa }})
+  <strong>{{ e.degree }}</strong>, {{ e.institution }} ({{ e.gpa }})
 </div>
+{% endfor %}
+{% endif %}
 
+{% if skills %}   
 <h2>Skills</h2>
 <ul>
   <li><strong>Languages:</strong> {{ skills.languages | join(", ") }}</li>
@@ -38,6 +44,9 @@ ul { list-style: none; padding: 0; }
   <li><strong>Software:</strong> {{ skills.software | join(", ") }}</li>
   <li><strong>Disciplines:</strong> {{ skills.disciplines | join(", ") }}</li>
 </ul> 
+{% endif %}
+
+{% if certifications %}
 <h2>Certifications</h2>
 <ul>
 {% for c in certifications %}
@@ -50,8 +59,12 @@ ul { list-style: none; padding: 0; }
   <li><strong>{{ t.title }}</strong> — {{ t.provider }} ({{ t.date }})</li>
 {% endfor %}
 </ul>
+{% endif %}
+
+{% if veteran_status %}
 <h2>Veteran Status</h2>
 <p>{{ veteran_status.branch }} — {{ veteran_status.status }}<br>
 <a href="{{ veteran_status.url }}">{{ veteran_status.url }}</a></p>
 </body>
 </html>
+{% endif %}

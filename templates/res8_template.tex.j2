@@ -16,10 +16,22 @@
 
 \name{ {{ name }}\\[12pt] }
 
-\address{{ '{{' }}\bf Electronic Addresses} \\home: \href{{ '{' }}mailto:{{ contact.email.personal }}{{ '}' }}{{ '{' }}{{ contact.email.personal }}{{ '}' }} \\  work: \href{mailto://{{ contact.email.work }}}{{ '{' }}{{ contact.email.work }}{{ '}' }}\\web:   \href{{ '{' }}https://{{contact.web }}{{ '}' }}{{ '{' }}{{ contact.web }}{{ '}' }}}
-\address{{ '{{' }}\bf Physical Address} \\ {{ contact.address }}, \\ {{ contact.city }}, {{ contact.state }} {{ contact.zip }}\\
-        {{ contact.phone }} }
-        
+
+{% if options.contact.work and options.contact.personal %}
+\address{{ '{{' }}\bf Electronic Addresses} \\home: \href{{ '{' }}mailto:{{ contact.email.personal }}{{ '}' }}{{ '{' }}{{ contact.email.personal }}{{ '}' }} \\  work: \href{mailto://{{ contact.email.work }}}{{ '{' }}{{ contact.email.work }}{{ '}' }}\\web:   \href{{ '{' }}https://{{contact.web.persona }}{{ '}' }}{{ '{' }}{{ contact.web.personal }}{{ '}' }}}
+\address{{ '{{' }}\bf Physical Address} \\ {{ contact.address.work }}, \\ {{ contact.city.work }}, {{ contact.state.work }} {{ contact.zip.work }}\\
+        {{ contact.phone.work }} }
+{% endif %}
+{% if options.contact.work and not options.contact.personal %}
+\address{{ '{{' }}\bf Electronic Addresses} \\work: \href{{ '{' }}mailto:{{ contact.email.work }}{{ '}' }}{{ '{' }}{{ contact.email.work }}{{ '}' }} \\web:   \href{{ '{' }}https://{{contact.web.work }}{{ '}' }}{{ '{' }}{{ contact.web.work }}{{ '}' }}}
+\address{{ '{{' }}\bf Physical Address} \\ {{ contact.address.work }}, \\ {{ contact.city.work }}, {{ contact.state.work }} {{ contact.zip.work }}\\
+        {{ contact.phone.work }} }
+{% endif %}
+{% if options.contact.personal and not options.contact.work %}
+\address{{ '{{' }}\bf Electronic Addresses} \\home: \href{{ '{' }}mailto:{{ contact.email.personal }}{{ '}' }}{{ '{' }}{{ contact.email.personal }}{{ '}' }} \\web:   \href{{ '{' }}https://{{contact.web.personal }}{{ '}' }}{{ '{' }}{{ contact.web.personal }}{{ '}' }}}
+\address{{ '{{' }}\bf Physical Address} \\ {{ contact.address.personal }}, \\ {{ contact.city.personal }}, {{ contact.state.personal }} {{ contact.zip.personal }}\\
+        {{ contact.phone.personal }} }
+{% endif %}        
 \begin{resume}
 
 \section{\centerline{PROFILE}}
@@ -45,6 +57,7 @@
 \end{itemize}
 {% endfor %}
 
+{% if skills %}
 \vspace{0.2in}
 \section{\centerline{COMPUTING SKILLS}}
 \vspace{8pt}
@@ -54,20 +67,28 @@
 \underline{Software:} & {{ skills.software | join(', ') }} \\
 \underline{Disciplines:} & {{ skills.disciplines | join(', ') }} \\
 \end{tabular}
+{% endif %}
 
+{% if education %}
 \vspace{0.2in}
 \section{\centerline{EDUCATION}}
 \vspace{8pt}
-{\sl {{ education.degree }}}, {{ education.institution }} \\
-{{ education.location }} \hspace{0.2in} GPA {{ education.gpa }} \hfill {{ education.graduation }}
+{% for e in education %}
+{\sl {{ e.degree }}}, {{ e.institution }} \\
+{{ e.location }} \hspace{0.2in} GPA {{ e.gpa }} \hfill {{ e.graduation }}
+{% endfor %}
+{% endif %}
 
+{% if certifications %}
 \vspace{0.2in}
 \section{\centerline{CERTIFICATIONS}}
 \vspace{8pt}
 {% for c in certifications %}
 {{ c }}\\
 {% endfor %}
+{% endif %}
 
+{% if training %}
 \vspace{0.2in}
 \section{\centerline{TRAINING}}
 \vspace{8pt}
@@ -76,12 +97,14 @@
 \emph{ {{ t.title }}, } {{ t.provider }}, {{ t.date }}\\
 {% endfor %}
 \end{raggedright}
+{% endif %}
 
+{% if veteran_status %}
 \vspace{0.2in}
 \section{\centerline{VETERAN STATUS}}
 \vspace{8pt}
 \href{{ '{' }}{{ veteran_status.url }}{{ '}' }}{ {{ veteran_status.branch }}{{'}'}}, {{ veteran_status.status }}
-
+{% endif %}
 \vspace{0.2in}
 \end{resume}
 \end{document}

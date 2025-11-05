@@ -1,16 +1,39 @@
+options:
+  contact:
+    work: True
+    personal: False
+  txt:
+  resume:
+    title: Professional Resume
+
 name: "Your Name"
 
 contact:
   email:
     personal: "your.email@example.com"
     work: "your.work@example.com"
-  phone: "(000) 000-0000"
-  address: "123 Example St"
-  city: "City"
-  state: "ST"
-  zip: "00000"
+  phone: 
+    personal: "(000) 000-0000"
+    work: "(800) 000-0000"
+  address: 
+    personal: "123 Example St"
+    work: "123 Work St"
+  city: 
+    personal: "City"
+    work: "Work City"
+  state: 
+    personal: "ST"
+    work: "ST"
+  zip: 
+    personal: "00000"
+    work: "11111"
   linkedin: "https://www.linkedin.com/in/yourprofile"
-  web: "yourwebsite.example.com"
+  web: 
+    personal: "yourwebsite.example.com"
+    work: "workwebsite.example.com"
+  git:
+    personal: "https://gitlab.com/personal"
+    work: "https://github.com/work"
 
 objective: >
   A short statement of your objective or the role you are seeking.
@@ -36,11 +59,16 @@ skills:
   disciplines: ["Documentation"]
 
 education:
-  degree: "Degree Name"
-  institution: "University Name"
-  location: "City, ST"
-  gpa: "4.0"
-  graduation: "Year"
+  - degree: "Undergraduate Name"
+    institution: "University Name"
+    location: "City, ST"
+    gpa: "4.0"
+    graduation: "Year"
+  - degree: "Graduate Name"
+    institution: "University Name"
+    location: "City, ST"
+    gpa: "4.0"
+    graduation: "Year"
 
 certifications:
   - "Certification Name (Year)"
@@ -49,8 +77,3 @@ training:
   - title: "Training Title"
     provider: "Provider"
     date: "Year"
-
-veteran_status:
-  branch: ""
-  status: ""
-  url: ""

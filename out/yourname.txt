@@ -1,0 +1,53 @@
+
+
+                                   Your Name                                    
+                              Professional Resume                               
+
+--------------------------------------------------------------------------------
+
+OBJECTIVE
+
+A short statement of your objective or the role you are seeking.
+
+PROFILE
+
+A brief professional summary highlighting experience, skills, and goals.
+
+EXPERIENCE
+
+Job Title — Example Company
+City, ST  Month Year - Month Year
+
+- Key achievement or responsibility.
+- Another highlight.
+
+
+EDUCATION
+
+Undergraduate Name
+University Name, City, ST — Year
+GPA: 4.0
+
+Graduate Name
+University Name, City, ST — Year
+GPA: 4.0
+
+
+SKILLS
+
+Languages: Python, BASH
+Cloud/Infra: Automation, Monitoring
+Software: Terraform, Ansible
+Disciplines: Documentation
+
+
+CERTIFICATIONS
+
+- Certification Name (Year)
+
+
+TRAINING
+
+- Training Title — Provider (Year)
+
+

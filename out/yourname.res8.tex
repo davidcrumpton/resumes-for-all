@@ -1,0 +1,80 @@
+\documentclass{res}
+\usepackage{newcent}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{24pt}
+\setlength{\headsep}{24pt}
+\pagestyle{fancy}
+\rhead{ {\it D. Crumpton}\\{\it p. \thepage} }
+\cfoot{}
+\topmargin=-0.5in
+
+\begin{document}
+\thispagestyle{empty}
+
+\name{ Your Name\\[12pt] }
+
+
+\address{{\bf Electronic Addresses} \\work: \href{mailto:your.work@example.com}{your.work@example.com} \\web:   \href{https://workwebsite.example.com}{workwebsite.example.com}}
+\address{{\bf Physical Address} \\ 123 Work St, \\ Work City, ST 11111\\
+        (800) 000-0000 }
+        
+\begin{resume}
+
+\section{\centerline{PROFILE}}
+\vspace{8pt}
+A brief professional summary highlighting experience, skills, and goals.
+
+
+\vspace{0.2in}
+\section{\centerline{OBJECTIVE}}
+\vspace{8pt}
+A short statement of your objective or the role you are seeking.
+
+
+\vspace{0.2in}
+\section{\centerline{PROFESSIONAL EXPERIENCE}}
+\vspace{8pt}
+
+{\sl \href{https://www.example.com/}{Example Company}}, City, ST \hfill Month Year - Month Year \\
+Job Title, City, ST
+\begin{itemize} \itemsep -2pt
+\item Key achievement or responsibility.
+\item Another highlight.
+\end{itemize}
+
+\vspace{0.2in}
+\section{\centerline{COMPUTING SKILLS}}
+\vspace{8pt}
+\begin{tabular}{l p{3in}}
+\underline{Languages:} & Python, BASH \\
+\underline{Cloud Infra:} & Automation, Monitoring \\
+\underline{Software:} & Terraform, Ansible \\
+\underline{Disciplines:} & Documentation \\
+\end{tabular}
+
+\vspace{0.2in}
+\section{\centerline{EDUCATION}}
+\vspace{8pt}
+{\sl Undergraduate Name}, University Name \\
+City, ST \hspace{0.2in} GPA 4.0 \hfill Year
+{\sl Graduate Name}, University Name \\
+City, ST \hspace{0.2in} GPA 4.0 \hfill Year
+
+\vspace{0.2in}
+\section{\centerline{CERTIFICATIONS}}
+\vspace{8pt}
+Certification Name (Year)\\
+
+\vspace{0.2in}
+\section{\centerline{TRAINING}}
+\vspace{8pt}
+\begin{raggedright}
+\emph{ Training Title, } Provider, Year\\
+\end{raggedright}
+
+\vspace{0.2in}
+\end{resume}
+\end{document}

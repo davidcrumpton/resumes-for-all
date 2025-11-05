@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import yaml, jinja2, os, re, string
+import textwrap
 
 
 def render(template_file, data_file, output_file):
+    # print (f"📝 Rendering {template_file} with {data_file} -> {output_file}")
     with open(data_file) as f:
         data = yaml.safe_load(f)
 
@@ -13,6 +15,7 @@ def render(template_file, data_file, output_file):
     env.filters['escape_md'] = escape_md
     env.filters['escape_html'] = escape_html
     env.filters['md_trailing_punc'] = md_trailing_punc
+    env.filters['wrap'] = wrap_text
 
     template = env.get_template(template_file)
     result = template.render(**data)
@@ -73,6 +76,44 @@ def escape_html(value):
     for char, esc in html_special.items():
         value = value.replace(char, esc)
     return value
+
+
+def wrap_text(value, width=80, prefix=''):
+    """Wrap text to a given width preserving paragraphs.
+
+    - value: text to wrap
+    - width: desired maximum line width (int)
+    - prefix: optional string to use as initial indent for each paragraph
+      (useful for bullets like '- '). Subsequent lines are indented to
+      the same length as the prefix.
+    """
+    if value is None:
+        return ''
+    try:
+        w = int(width)
+    except Exception:
+        w = 80
+
+    text = str(value).strip()
+    if not text:
+        return ''
+
+    # Split into paragraphs separated by blank lines
+    paras = text.split('\n\n')
+    wrapped_paras = []
+    for p in paras:
+        p = p.replace('\n', ' ').strip()
+        if not p:
+            wrapped_paras.append('')
+            continue
+        if prefix:
+            subsequent = ' ' * len(prefix)
+            wrapped = textwrap.fill(p, width=w, initial_indent=prefix, subsequent_indent=subsequent)
+        else:
+            wrapped = textwrap.fill(p, width=w)
+        wrapped_paras.append(wrapped)
+
+    return '\n\n'.join(wrapped_paras)
 
 if __name__ == "__main__":
     # Render every template in the templates/ directory that ends with .j2

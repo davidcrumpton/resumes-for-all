@@ -1,0 +1,80 @@
+{#
+  Plain-text resume template.
+  - Centers `name` and an optional subtitle (uses Jinja2 `center` filter).
+  - Default width is 80 characters; set `options.txt.page_width` in `resume.yaml` to change.
+  - The rest of the document is left-justified.
+#}
+{% set W = options.txt.page_width or 80 %}
+
+
+{{ name | center(W) }}
+{% if options.resume.title %}{{ options.resume.title | center(W) }}
+{% endif %}
+
+{{ ('-' * W) }}
+
+OBJECTIVE
+
+{{ objective | wrap(W) }}
+
+PROFILE
+
+{{ profile | wrap(W) }}
+
+EXPERIENCE
+
+{% for job in experience %}
+{{ job.title }} — {{ job.company }}
+{{ job.location }}  {{ job.dates }}
+
+{% for h in job.highlights %}
+{{ h | wrap(W, "- ") }}
+{% endfor %}
+
+{% endfor %}
+
+{% if education %}
+EDUCATION
+
+{% for e in education %}
+{{ e.degree }}
+{{ e.institution }}, {{ e.location }} — {{ e.graduation }}
+GPA: {{ e.gpa }}
+
+{% endfor %}
+{% endif %}
+
+{% if skills %}
+SKILLS
+
+Languages: {{ skills.languages | join(", ") }}
+Cloud/Infra: {{ skills.cloud_infra | join(", ") }}
+Software: {{ skills.software | join(", ") }}
+Disciplines: {{ skills.disciplines | join(", ") }}
+
+{% endif %}
+
+{% if certifications %}
+CERTIFICATIONS
+
+{% for c in certifications %}
+- {{ c }}
+{% endfor %}
+
+{% endif %}
+
+{% if training %}
+TRAINING
+
+{% for t in training %}
+- {{ t.title }} — {{ t.provider }} ({{ t.date }})
+{% endfor %}
+
+{% endif %}
+
+{% if veteran_status %}
+VETERAN STATUS
+
+{{ veteran_status.branch }} — {{ veteran_status.status }}
+{{ veteran_status.url }}
+{% endif %}

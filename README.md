@@ -10,10 +10,11 @@ Your personal data lives in one file (`resume.yaml`), and `generate.py` renders 
 ## 🧰 Features
 
 - **Single source of truth:** All resume content in `resume.yaml`.
-- **Multi-format output:** `.pdf`, `.tex`, `.md`, and `.html` from Jinja2 templates.
+- **Multi-format output:** `.pdf`, `.tex`, `.md`, `.txt`, and `.html` from Jinja2 templates.
 - **Auto naming & deduplication:** Generates consistent file names automatically.
 - **Automation-ready:** Works locally and through GitLab CI/CD.
 - **Extensible templates:** Add more formats (DOCX, JSON, etc.) easily.
+- **Optional Rendering:** Some fields can be excluded or included with variables
 
 ---
 
@@ -153,6 +154,37 @@ This ensures builds never overwrite outputs from different templates.
 
 ---
 
+## Plain-text output
+
+A plain-text template is included: `templates/resume.txt.j2`.
+
+- The template centers the `name` (and an optional `title`) and left-justifies the rest.
+- It supports a configurable page width via the top-level `page_width` value in `resume.yaml` (default: 80).
+- Long paragraphs and bullet items are automatically wrapped to the page width using a registered `wrap` Jinja2 filter.
+
+Example `resume.yaml` snippet to set width:
+
+```yaml
+options:
+  txt:
+    page_width: 72
+```
+
+Usage:
+
+```bash
+python generate.py
+```
+
+The generator will produce `out/<slug>.txt` (e.g. `out/davidcrumpton.txt`). For best viewing, open the `.txt` file in a monospaced font or a terminal.
+
+Notes:
+
+- The `wrap` filter accepts an optional prefix used for bullets so wrapped lines align correctly (the template passes `"- "` for list items).
+- If you want different headline behavior (for example a `headline` field instead of using `title`), update `resume.yaml` and the template accordingly.
+
+---
+
 ## 🧠 How It Works Internally
 
 1. Loads `resume.yaml` into memory using PyYAML.
@@ -162,6 +194,7 @@ This ensures builds never overwrite outputs from different templates.
    - `escape_latex` — handles `&`, `%`, `$`, `#`, etc.
    - `escape_md` — escapes Markdown control characters.
    - `escape_html` — replaces `<`, `>`, and `&`.
+   - `md_trailing_punc` - replaces punctuation characters at the end of the text
 4. Iterates over each template ending in `.j2`.
 5. Builds a name slug and writes the rendered result into `out/`.
 
@@ -188,6 +221,7 @@ To add a new format (for example, JSON or plain text):
 1. Create a new file in `templates/` named `json_template.json.j2`
 2. Use Jinja2 variables like `{{ name }}` and loops for `experience`
 3. Run `python generate.py` — it will automatically detect and render it
+4. The `build` script in the root folder runs generate.py and pdflatex to generate the PDFs
 
 ---
 
