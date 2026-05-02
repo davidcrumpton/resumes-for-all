@@ -12,9 +12,10 @@ Your personal data lives in one file (`resume.yaml`), and `generate.py` renders 
 - **Single source of truth:** All resume content in `resume.yaml`.
 - **Multi-format output:** `.pdf`, `.tex`, `.md`, `.txt`, and `.html` from Jinja2 templates.
 - **Auto naming & deduplication:** Generates consistent file names automatically.
+- **Integrated build pipeline:** Copies the LaTeX class file and compiles all `.tex` → `.pdf` in one command.
 - **Automation-ready:** Works locally and through GitLab CI/CD.
 - **Extensible templates:** Add more formats (DOCX, JSON, etc.) easily.
-- **Optional Rendering:** Some fields can be excluded or included with variables
+- **Optional Rendering:** Some fields can be excluded or included with variables.
 
 ---
 
@@ -28,7 +29,7 @@ Make sure you have:
 - LaTeX packages:
 
 ```bash
-  sudo apt-get install texlive-latex-base texlive-latex-extra texlive-fonts-recommended
+sudo apt-get install texlive-latex-base texlive-latex-extra texlive-fonts-recommended
 ```
 
 - Python libraries:
@@ -59,7 +60,7 @@ python generate.py
 This scans the `templates/` directory for any files ending in `.j2`
 and renders each one using your `resume.yaml` data.
 
-All generated files are written to an `out/` directory for convenience.
+All generated files are written to the `out/` directory by default.
 
 Example output:
 
@@ -73,28 +74,71 @@ out/
 ├── davidcrumpton.html
 ```
 
-To produce PDFs:
+To render templates **and** compile all `.tex` files to PDF in one step:
 
 ```bash
-# replace my name with yours
-cp res.cls out/
-pdflatex out/davidcrumpton.res8.tex
-pdflatex out/davidcrumpton.tex
-# OR to build all including PDFs in out/ folder
-./build
+python generate.py --build
+```
+
+This replaces the old `build` shell script. It copies `res.cls` into the output
+directory and runs `pdflatex` on every `.tex` file found there.
+
+---
+
+### 3. CLI Options
+
+`generate.py` supports a full set of command-line options:
+
+```text
+usage: generate.py [-h] [-d FILE] [-t FILE] [--template-dir DIR]
+                   [-o DIR] [-b] [--cls FILE] [-v]
+```
+
+| Flag | Default | Description |
+|---|---|---|
+| `-d, --data FILE` | `resume.yaml` | YAML data file to render from |
+| `-t, --template FILE` | *(all `.j2`)* | Render a single template instead of all |
+| `--template-dir DIR` | `templates/` | Directory containing Jinja2 templates |
+| `-o, --outdir DIR` | `out/` | Directory to write output files into |
+| `-b, --build` | off | Run the full build pipeline (copy `.cls` + compile `.tex` → PDF) |
+| `--cls FILE` | `res.cls` | LaTeX class file to copy into outdir during `--build` |
+| `-v, --verbose` | off | Print detailed progress for every step |
+
+**Examples:**
+
+```bash
+# Render all templates with verbose output
+python generate.py -v
+
+# Use a different data file
+python generate.py -d cv.yaml
+
+# Render a single template only
+python generate.py -t res8_template.tex.j2
+
+# Write outputs to a custom directory
+python generate.py -o build/
+
+# Full build: render + compile PDFs (replaces the old `build` script)
+python generate.py --build
+
+# Full build with a custom .cls file and verbose output
+python generate.py --build --cls myclass.cls -v
+
+# Build a single template into a custom output directory
+python generate.py -b -t resume.tex.j2 -o build/ -v
 ```
 
 ---
 
-### 3. GitLab CI/CD Automation
+### 4. GitLab CI/CD Automation
 
 The `.gitlab-ci.yml` pipeline handles automated builds.
 It will:
 
 1. Install Python and LaTeX dependencies
-2. Run `generate.py`
-3. Compile all `.tex` files into PDFs
-4. Store `.pdf`, `.tex`, `.md`, and `.html` artifacts
+2. Run `generate.py --build`
+3. Store `.pdf`, `.tex`, `.md`, and `.html` artifacts
 
 All results appear under the **Artifacts** tab after a successful pipeline run.
 
@@ -127,8 +171,7 @@ The script automatically generates file names based on your name and template fi
   name: David M. Crumpton
   ```
 
-  → creates a slug:
-  `davidcrumpton`
+  → creates a slug: `davidcrumpton`
 
 - That slug becomes the base name for all output files.
 
@@ -170,12 +213,6 @@ options:
     page_width: 72
 ```
 
-Usage:
-
-```bash
-python generate.py
-```
-
 The generator will produce `out/<slug>.txt` (e.g. `out/davidcrumpton.txt`). For best viewing, open the `.txt` file in a monospaced font or a terminal.
 
 Notes:
@@ -187,16 +224,17 @@ Notes:
 
 ## 🧠 How It Works Internally
 
-1. Loads `resume.yaml` into memory using PyYAML.
-2. Creates a `jinja2.Environment` configured for `templates/`.
+1. Loads the YAML data file (default: `resume.yaml`) into memory using PyYAML.
+2. Creates a `jinja2.Environment` configured for the templates directory.
 3. Registers format-specific filters:
-
    - `escape_latex` — handles `&`, `%`, `$`, `#`, etc.
    - `escape_md` — escapes Markdown control characters.
    - `escape_html` — replaces `<`, `>`, and `&`.
-   - `md_trailing_punc` - replaces punctuation characters at the end of the text
-4. Iterates over each template ending in `.j2`.
-5. Builds a name slug and writes the rendered result into `out/`.
+   - `md_trailing_punc` — strips trailing punctuation from values.
+   - `wrap` — wraps long text to a configurable column width.
+4. Iterates over each template ending in `.j2` (or the single template specified with `-t`).
+5. Builds a name slug and writes the rendered result into the output directory.
+6. If `--build` is passed, copies the `.cls` file into the output directory and compiles every `.tex` file to PDF using `pdflatex`.
 
 ---
 
@@ -214,14 +252,13 @@ LinkedIn: [linkedin.com/in/davidcrumpton](https://linkedin.com/in/davidcrumpton)
 
 ---
 
-### 🧩 Example Extendability
+## 🧩 Example Extendability
 
 To add a new format (for example, JSON or plain text):
 
 1. Create a new file in `templates/` named `json_template.json.j2`
 2. Use Jinja2 variables like `{{ name }}` and loops for `experience`
 3. Run `python generate.py` — it will automatically detect and render it
-4. The `build` script in the root folder runs generate.py and pdflatex to generate the PDFs
 
 ---
 
