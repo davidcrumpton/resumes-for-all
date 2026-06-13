@@ -7,6 +7,19 @@ Your personal data lives in one file (`resume.yaml`), and `generate.py` renders 
 
 ---
 
+## Breaking Update
+
+New style for LaTex template using new JinJa separators is not compatible with previous editions.  It is much clearer and easier to read and write
+since it both JinJa and LaTex documents heavily use squiggly braces.  The new style uses angle brackets instead of squiggly braces are defined 
+below in generate.py:
+
+variable_start_string='<<=',
+variable_end_string='=>>',
+block_start_string='<<',
+block_end_string='>>',
+comment_start_string='<<#',
+comment_end_string='#>>'
+
 ## 🧰 Features
 
 - **Single source of truth:** All resume content in `resume.yaml`.
@@ -16,6 +29,7 @@ Your personal data lives in one file (`resume.yaml`), and `generate.py` renders 
 - **Automation-ready:** Works locally and through GitLab CI/CD.
 - **Extensible templates:** Add more formats (DOCX, JSON, etc.) easily.
 - **Optional Rendering:** Some fields can be excluded or included with variables.
+- **Squiggly braces removed:** The generate script uses angle brackets for JinJa separators.  This is incompatible with previous editions.
 
 ---
 

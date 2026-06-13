@@ -14,98 +14,97 @@
 \begin{document}
 \thispagestyle{empty}
 
-\name{ {{ name }}\\[12pt] }
+\name{ <<= name =>>\\[12pt] }
 
 
-{% if options.contact.work and options.contact.personal %}
-\address{{ '{{' }}\bf Electronic Addresses} \\home: \href{{ '{' }}mailto:{{ contact.email.personal }}{{ '}' }}{{ '{' }}{{ contact.email.personal }}{{ '}' }} \\  work: \href{mailto://{{ contact.email.work }}}{{ '{' }}{{ contact.email.work }}{{ '}' }}\\web:   \href{{ '{' }}https://{{contact.web.persona }}{{ '}' }}{{ '{' }}{{ contact.web.personal }}{{ '}' }}}
-\address{{ '{{' }}\bf Physical Address} \\ {{ contact.address.work }}, \\ {{ contact.city.work }}, {{ contact.state.work }} {{ contact.zip.work }}\\
-        {{ contact.phone.work }} }
-{% endif %}
-{% if options.contact.work and not options.contact.personal %}
-\address{{ '{{' }}\bf Electronic Addresses} \\work: \href{{ '{' }}mailto:{{ contact.email.work }}{{ '}' }}{{ '{' }}{{ contact.email.work }}{{ '}' }} \\web:   \href{{ '{' }}https://{{contact.web.work }}{{ '}' }}{{ '{' }}{{ contact.web.work }}{{ '}' }}}
-\address{{ '{{' }}\bf Physical Address} \\ {{ contact.address.work }}, \\ {{ contact.city.work }}, {{ contact.state.work }} {{ contact.zip.work }}\\
-        {{ contact.phone.work }} }
-{% endif %}
-{% if options.contact.personal and not options.contact.work %}
-\address{{ '{{' }}\bf Electronic Addresses} \\home: \href{{ '{' }}mailto:{{ contact.email.personal }}{{ '}' }}{{ '{' }}{{ contact.email.personal }}{{ '}' }} \\web:   \href{{ '{' }}https://{{contact.web.personal }}{{ '}' }}{{ '{' }}{{ contact.web.personal }}{{ '}' }}}
-\address{{ '{{' }}\bf Physical Address} \\ {{ contact.address.personal }}, \\ {{ contact.city.personal }}, {{ contact.state.personal }} {{ contact.zip.personal }}\\
-        {{ contact.phone.personal }} }
-{% endif %}        
+<< if options.contact.work and options.contact.personal >>
+\address{{\bf Electronic Addresses} \\home: \href{mailto:<<= contact.email.personal =>>}{<<= contact.email.personal =>>} \\  work: \href{mailto://<<= contact.email.work =>>{<<= contact.email.work =>>}\\web:   \href{https://<<= contact.web.persona =>>}{<<= contact.web.personal =>>}}
+\address{{\bf Physical Address} \\ <<= contact.address.work =>>, \\ <<= contact.city.work =>>, <<= contact.state.work =>> <<= contact.zip.work =>>\\
+        <<= contact.phone.work =>> }
+<< endif >>
+<< if options.contact.work and not options.contact.personal >>
+\address{{\bf Electronic Addresses} \\work: \href{mailto:<<= contact.email.work =>>}{<<= contact.email.work =>>} \\web:   \href{https://<<= contact.web.work =>>}{<<= contact.web.work =>>}}
+\address{{\bf Physical Address} \\ <<= contact.address.work =>>, \\ <<= contact.city.work =>>, <<= contact.state.work =>> <<= contact.zip.work =>>\\
+        <<= contact.phone.work =>> }
+<< endif >>
+<< if options.contact.personal and not options.contact.work >>
+\address{{\bf Electronic Addresses} \\home: \href{mailto:<<= contact.email.personal =>>}{<<= contact.email.personal =>>} \\web:   \href{https://<<= contact.web.personal =>>}{<<= contact.web.personal =>>}}
+\address{{\bf Physical Address} \\ <<= contact.address.personal =>>, \\ <<= contact.city.personal =>>, <<= contact.state.personal =>> <<= contact.zip.personal =>>\\
+        <<= contact.phone.personal =>> }
+<< endif >>        
 \begin{resume}
 
 \section{\centerline{PROFILE}}
 \vspace{8pt}
-{{ profile }}
+<<= profile =>>
 
 \vspace{0.2in}
 \section{\centerline{OBJECTIVE}}
 \vspace{8pt}
-{{ objective }}
+<<= objective =>>
 
 \vspace{0.2in}
 \section{\centerline{PROFESSIONAL EXPERIENCE}}
 \vspace{8pt}
 
-{% for job in experience %}
-{\sl \href{{'{'}}{{ job.url }}{{'}'}}{{'{'}}{{ job.company }}}}, {{ job.location }} \hfill {{ job.dates }} \\
-{{ job.title }}, {{ job.location }}
+<< for job in experience >>
+{\sl \href{<<= job.url =>>}{<<= job.company =>>}}, <<= job.location =>> \hfill <<= job.dates =>> \\
+<<= job.title =>>, <<= job.location =>>
 \begin{itemize} \itemsep -2pt
-{% for h in job.highlights %}
-\item {{ h }}
-{% endfor %}
+<< for h in job.highlights >>
+\item <<= h =>>
+<< endfor >>
 \end{itemize}
-{% endfor %}
+<< endfor >>
 
-{% if skills %}
+<< if skills >>
 \vspace{0.2in}
 \section{\centerline{COMPUTING SKILLS}}
 \vspace{8pt}
 \begin{tabular}{l p{3in}}
-\underline{Languages:} & {{ skills.languages | join(', ') }} \\
-\underline{Cloud Infra:} & {{ skills.cloud_infra | join(', ') }} \\
-\underline{Software:} & {{ skills.software | join(', ') }} \\
-\underline{Disciplines:} & {{ skills.disciplines | join(', ') }} \\
+\underline{Languages:} & {<<= skills.languages | join(', ') =>>} \\
+\underline{Cloud Infra:} & {<<= skills.cloud_infra | join(', ') =>>} \\
+\underline{Software:} & {<<= skills.software | join(', ') =>>} \\
+\underline{Disciplines:} & {<<= skills.disciplines | join(', ') =>>} \\
 \end{tabular}
-{% endif %}
+<< endif >>
 
-{% if education %}
+<< if education >>
 \vspace{0.2in}
 \section{\centerline{EDUCATION}}
 \vspace{8pt}
-{% for e in education %}
-{\sl {{ e.degree }}}, {{ e.institution }} \\
-{{ e.location }} \hspace{0.2in} GPA {{ e.gpa }} \hfill {{ e.graduation }}
+<< for e in education >>
+{\sl <<= e.degree =>>}, <<= e.institution =>> \\
+<<= e.location =>> \hspace{0.2in} GPA <<= e.gpa =>> \hfill <<= e.graduation =>>
 
-{% endfor %}
-{% endif %}
+<< endfor >>
+<< endif >>
 
-{% if certifications %}
+<< if certifications >>
 \vspace{0.2in}
 \section{\centerline{CERTIFICATIONS}}
 \vspace{8pt}
-{% for c in certifications %}
-{{ c }}\\
-{% endfor %}
-{% endif %}
+<< for c in certifications >>
+<<= c =>>\\
+<< endfor >>
+<< endif >>
 
-{% if training %}
+<< if training >>
 \vspace{0.2in}
 \section{\centerline{TRAINING}}
 \vspace{8pt}
 \begin{raggedright}
-{% for t in training %}
-\emph{ {{ t.title }}, } {{ t.provider }}, {{ t.date }}\\
-{% endfor %}
-\end{raggedright}
-{% endif %}
+<< for t in training >>
+\emph{ <<= t.title =>>, } <<= t.provider =>>, <<= t.date =>>\\
+<< endfor >>\end{raggedright}
+<< endif >>
 
-{% if veteran_status %}
+<< if veteran_status >>
 \vspace{0.2in}
 \section{\centerline{VETERAN STATUS}}
 \vspace{8pt}
-\href{{ '{' }}{{ veteran_status.url }}{{ '}' }}{ {{ veteran_status.branch }}{{'}'}}, {{ veteran_status.status }}
-{% endif %}
+\href{<<= veteran_status.url =>>}{<<= veteran_status.branch =>>}, <<= veteran_status.status =>>
+<< endif >>
 \vspace{0.2in}
 \end{resume}
 \end{document}

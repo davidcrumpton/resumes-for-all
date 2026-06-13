@@ -7,82 +7,82 @@
 \begin{document}
 
 \begin{center}
-  {\LARGE {{ name|escape_latex }}} \\[4pt]
+  {\LARGE <<= name|escape_latex =>>} \\[4pt]
   \vspace{4pt}
-  {% if options.contact.personal %}
-  home: \href{mailto:{{ contact.email.personal|escape_latex }}}{{ '{' }}{{ contact.email.personal|escape_latex }}{{ '}' }} \\
-  {% endif %}
-  {% if options.contact.work %}
-  work: \href{mailto:{{ contact.email.work|escape_latex }}}{{ '{' }}{{ contact.email.work|escape_latex }}{{ '}' }} \\
-  {% endif %}
-  web: \href{https://{{ contact.web.personal }}}{{ '{' }}{{ contact.web.personal }}{{ '}' }} \\
-  {% if options.contact.work %}
-  phone: {{ contact.phone.work|escape_latex }} \\
-  {% endif %}
-  {% if options.contact.work %}
-  address: {{ contact.address.work|escape_latex }}, {{ contact.city.work }}, {{ contact.state.work }} {{ contact.zip.work }} \\
-  {% endif %}
+  << if options.contact.personal >>
+  home: \href{mailto:<<= contact.email.personal|escape_latex =>>}{<<=contact.email.personal|escape_latex =>>} \\
+  << endif >>
+  << if options.contact.work >>
+  work: \href{mailto:<<= contact.email.work|escape_latex =>>}{<<=contact.email.work|escape_latex =>>} \\
+  << endif >>
+  web: \href{https://<<= contact.web.personal =>>}{<<=contact.web.personal =>>} \\
+  << if options.contact.work >>
+  phone: <<= contact.phone.work =>> \\
+  << endif >>
+  << if options.contact.work >>
+  address: <<= contact.address.work =>>, <<= contact.city.work =>>, <<= contact.state.work =>> <<= contact.zip.work =>> \\
+  << endif >>
 \end{center}
 
 \vspace{8pt}
 
 \section*{Objective}
-{{ objective|escape_latex }}
+<<= objective|escape_latex =>>
 
 \vspace{8pt}
 \section*{Profile}
-{{ profile|escape_latex }}
+<<= profile|escape_latex =>>
 
 \vspace{6pt}
 \section*{Professional Experience}
-{% for job in experience %}
-  	{\bf {{ job.title|escape_latex }} } - \href{{ '{' }}{{ job.url }}{{ '}' }}{{ '{' }}{{ job.company|escape_latex }}{{ '}' }}\hfill {{ job.dates|escape_latex }} \\
-  	 {{ job.location|escape_latex }}  \\
+<< for job in experience >>
+  	{\bf <<= job.title|escape_latex =>>} - \href{<<=job.url =>>}{<<=job.company|escape_latex =>>}\hfill <<= job.dates|escape_latex =>> \\
+  	 <<= job.location|escape_latex =>>  \\
   \begin{itemize}
-  {% for h in job.highlights %}
-    \item {{ h|escape_latex }}
-  {% endfor %}
+  << for h in job.highlights >>
+    \item <<= h|escape_latex =>>
+  << endfor >>
   \end{itemize}
-{% endfor %}
+<< endfor >>
 
 \section*{Education}
-{% for e in education %}
-	{\bf {{ e.degree|escape_latex }}, } {{ e.institution|escape_latex }} \\
-{{ e.location|escape_latex }} \hspace{0.2in} GPA {{ e.gpa|escape_latex }} \hfill {{ e.graduation|escape_latex }}
+<< for e in education >>
+	{\bf <<= e.degree|escape_latex =>>, } <<= e.institution|escape_latex =>> \\
+<<= e.location|escape_latex =>> \hspace{0.2in} GPA <<= e.gpa|escape_latex =>> \hfill <<= e.graduation|escape_latex =>>
 
 
-{% endfor %}
+<< endfor >>
 
-{% if certifications %}
+<< if certifications >>
 \section*{Certifications}
-{% for c in certifications %}
-  {{ c|escape_latex }} \\
-{% endfor %}
-{% endif %}
+<< for c in certifications >>
+  <<= c|escape_latex =>> \\
+<< endfor >>
+<< endif >>
 
-{% if training %}
+<< if training >>
 \raggedright
 \section*{Training}
 \begin{raggedright}
-{% for t in training %}
-\emph{ {{ t.title|escape_latex }}, } {{ t.provider|escape_latex }}, {{ t.date|escape_latex }} \\
-{% endfor %}
+<< for t in training >>
+\emph{ <<= t.title|escape_latex =>>, } <<= t.provider|escape_latex =>>, <<= t.date|escape_latex =>> \\
+<< endfor >>
 \end{raggedright}
-{% endif %}
+<< endif >>
 
-{% if veteran_status %}
+<< if veteran_status >>
 \section*{Veteran Status}
-\href{{ '{' }}{{ veteran_status.url }}{{ '}' }}{ {{ veteran_status.branch }}{{'}'}}, {{ veteran_status.status }}
-{% endif %}
-{% if skills %}
+\href{<<= veteran_status.url =>>}{<<= veteran_status.branch =>>}, <<=veteran_status.status =>>
+<< endif >>
+<< if skills >>
 \vspace{0.2in}
 \section*{Skills}
 \begin{tabular}{l p{3in}}
-\underline{Languages:} & {{ skills.languages | join(', ') | escape_latex }} \\
-\underline{Cloud Infra:} & {{ skills.cloud_infra | join(', ') | escape_latex }} \\
-\underline{Software:} & {{ skills.software | join(', ') | escape_latex }} \\
-\underline{Disciplines:} & {{ skills.disciplines | join(', ') | escape_latex }} \\
+\underline{Languages:} & <<= skills.languages | join(', ') | escape_latex =>> \\
+\underline{Cloud Infra:} & <<= skills.cloud_infra | join(', ') | escape_latex =>> \\
+\underline{Software:} & <<= skills.software | join(', ') | escape_latex =>> \\
+\underline{Disciplines:} & <<= skills.disciplines | join(', ') | escape_latex =>> \\
 \end{tabular}
-{% endif %}
+<< endif >>
 
 \end{document}

@@ -113,15 +113,30 @@ def wrap_text(value, width=80, prefix=''):
 # Jinja2 environment factory
 # ---------------------------------------------------------------------------
 
-def make_env(template_dir: str) -> jinja2.Environment:
-    env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir))
-    env.trim_blocks   = True
-    env.lstrip_blocks = True
-    env.filters['escape_latex']    = escape_latex
-    env.filters['escape_md']       = escape_md
-    env.filters['escape_html']     = escape_html
+def make_env(template_dir: str, template_file: str = '') -> jinja2.Environment:
+    is_latex = template_file.endswith(('.tex.j2', '.cls.j2'))
+    
+    kwargs = dict(
+        loader=jinja2.FileSystemLoader(template_dir),
+        trim_blocks=True,
+        lstrip_blocks=True,
+    )
+    if is_latex:
+        kwargs.update(
+            variable_start_string='<<=',
+            variable_end_string='=>>',
+            block_start_string='<<',
+            block_end_string='>>',
+            comment_start_string='<<#',
+            comment_end_string='#>>',
+        )
+    
+    env = jinja2.Environment(**kwargs)
+    env.filters['escape_latex']     = escape_latex
+    env.filters['escape_md']        = escape_md
+    env.filters['escape_html']      = escape_html
     env.filters['md_trailing_punc'] = md_trailing_punc
-    env.filters['wrap']            = wrap_text
+    env.filters['wrap']             = wrap_text
     return env
 
 
@@ -177,7 +192,7 @@ def render(template_file: str, data_file: str, output_file: str,
 
     if verbose:
         print(f"  📐 Loading template: {template_file}")
-    env      = make_env(template_dir)
+    env      = make_env(template_dir, template_file)
     template = env.get_template(template_file)
 
     if verbose:
