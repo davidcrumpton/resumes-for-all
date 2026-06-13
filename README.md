@@ -13,12 +13,14 @@ New style for LaTex template using new JinJa separators is not compatible with p
 since it both JinJa and LaTex documents heavily use squiggly braces.  The new style uses angle brackets instead of squiggly braces are defined 
 below in generate.py:
 
+```text
 variable_start_string='<<=',
 variable_end_string='=>>',
 block_start_string='<<',
 block_end_string='>>',
 comment_start_string='<<#',
 comment_end_string='#>>'
+```
 
 ## 🧰 Features
 
