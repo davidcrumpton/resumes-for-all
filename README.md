@@ -143,6 +143,9 @@ python generate.py --build --cls myclass.cls -v
 
 # Build a single template into a custom output directory
 python generate.py -b -t resume.tex.j2 -o build/ -v
+
+# Convert to DOCX
+pandoc out/yourname.md -f markdown-yaml_metadata_block -t docx -o out/yourname.docx 
 ```
 
 ---
